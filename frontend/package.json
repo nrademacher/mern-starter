@@ -1,0 +1,44 @@
+{
+  "name": "webdev-starter",
+  "version": "0.8.2",
+  "description": "Boilerplate template for web apps and sites",
+  "main": "index.jsx",
+  "repository": "https://github.com/nrademacher/webdev-starter",
+  "author": "Nikolay Rademacher",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "vite --open",
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "clean": "rm -r dist/",
+    "lint": "if [ -f .eslintrc.* ]; then eslint . --fix; else yarn setup:eslint && eslint . --fix; fi",
+    "setup:eslint": "yarn add -D eslint && eslint --init && if [ -f package-lock.json ]; then rm package-lock.json && yarn; fi && printf 'node_modules/\nbuild/' > .eslintignore",
+    "setup:typescript": "yarn add -D typescript vite-tsconfig-paths && printf 'import tsconfigPaths from \"vite-tsconfig-paths\";'$'\n'\"$(cat vite.config.js)\" > vite.config.js && sed -i '' 's/plugins: \\[/plugins: \\[tsconfigPaths(),/g' vite.config.js && tsc --init",
+    "git:rewind": "git reset --hard && git clean -f -d && yarn"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react-refresh": "latest",
+    "autoprefixer": "latest",
+    "daisyui": "latest",
+    "postcss": "latest",
+    "tailwindcss": "latest",
+    "vite": "latest"
+  },
+  "dependencies": {
+    "axios": "latest",
+    "jwt-decode": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-redux": "latest",
+    "react-router-dom": "latest",
+    "redux": "latest",
+    "redux-logger": "latest",
+    "redux-thunk": "latest"
+  },
+  "proxy": "http://localhost:5000",
+  "browserslist": [
+    "Edge >= 18, Firefox >= 60, Chrome >= 61, Safari >= 11, Opera >= 48"
+  ]
+}

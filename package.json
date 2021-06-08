@@ -1,0 +1,33 @@
+{
+  "name": "mern-starter",
+  "version": "1.0.0",
+  "description": "A boilerplate template for getting started with a MERN app",
+  "main": "app.js",
+  "repository": "https://github.com/nrademacher/mern-starter.git",
+  "author": "Nikolay Rademacher <hrrdx33@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "export NODE_ENV=production && node app.js",
+    "watch": "export NODE_ENV=development && nodemon app.js",
+    "frontend-install": "yarn --cwd frontend install",
+    "frontend": "yarn --cwd frontend dev",
+    "dev": "concurrently \"yarn watch\" \"yarn frontend\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false yarn --cwd frontend install && yarn --cwd frontend build"
+  },
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "concurrently": "^6.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.12",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "validator": "^13.6.0"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.7"
+  }
+}

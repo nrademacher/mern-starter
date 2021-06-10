@@ -2,9 +2,11 @@ process.env.NODE_ENV === 'development' && require('dotenv').config();
 const path = require('path');
 const mongoose = require('mongoose');
 const express = require('express');
+const {graphqlHTTP} = require('express-graphql');
 const passport = require('passport');
 require('./config/passport')(passport);
 const cors = require('cors');
+const schema = require('./schema/schema')
 const users = require('./routes/api/users');
 const tweets = require('./routes/api/tweets');
 
@@ -19,6 +21,10 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(passport.initialize());
+app.use('/graphql', graphqlHTTP({
+  schema,
+  graphiql: true,
+}));
 app.use('/api/users', users);
 app.use('/api/tweets', tweets);
 if (process.env.NODE_ENV === 'production') {

@@ -59,7 +59,7 @@ const LoginForm = (props) => {
             </label>
             <input
               type="password"
-              value={form.email}
+              value={form.password}
               onChange={updateField('password')}
               placeholder="Password"
               className="input input-bordered"

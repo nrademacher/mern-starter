@@ -9,11 +9,13 @@ module.exports = {
   register: async (data) => {
     try {
       // make sure our inputs our valid
-      /* const { message, isValid } = validateRegisterInput(data);
+      const { errors, isValid } = validateRegisterInput(data);
 
       if (!isValid) {
-        throw new Error(message);
-      } */
+        Object.keys(errors).forEach((error) => {
+          throw new Error(errors[error]);
+        });
+      }
 
       const { handle, email, password } = data;
       // make sure this sure doesn't already exist
@@ -45,6 +47,59 @@ module.exports = {
       return { token, loggedIn: true, ...user._doc, password: null };
     } catch (err) {
       throw err;
+    }
+  },
+  login: async (data) => {
+    const { errors, isValid } = validateLoginInput(data);
+
+    if (!isValid) {
+      Object.keys(errors).forEach((error) => {
+        throw new Error(errors[error]);
+      });
+    }
+
+    const { email, password } = data;
+    try {
+      const user = await User.findOne({ email });
+      if (!user) throw new Error('User not found');
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (isMatch) {
+        const payload = { id: user.id, handle: user.handle };
+
+        const jwtToken = jwt.sign(
+          payload,
+          process.env.SECRET,
+          // Tell the key to expire in one hour
+          { expiresIn: 3600 }
+        );
+
+        return { token: 'Bearer ' + jwtToken };
+      } else {
+        throw new Error('Incorrect password');
+      }
+    } catch (err) {
+      throw err;
+    }
+  },
+  verifyUser: async (data) => {
+    try {
+      // we take in the token from our mutation
+      const { token } = data;
+      // we decode the token using our secret password to get the
+      // user's id
+      const decoded = jwt.verify(token, process.env.SECRET);
+      const { id } = decoded;
+
+      // then we try to use the User with the id we just decoded
+      // making sure we await the response
+      const loggedIn = await User.findById(id).then((user) => {
+        return user ? true : false;
+      });
+
+      return { loggedIn };
+    } catch (err) {
+      return { loggedIn: false };
     }
   },
 };

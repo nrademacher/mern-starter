@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const PostBox = ({ text, user, id, deletePost, editPost }) => {
   const [editMode, setEditMode] = useState(false);

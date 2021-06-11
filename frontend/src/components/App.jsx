@@ -1,4 +1,3 @@
-import React from 'react';
 import { AuthRoute, ProtectedRoute } from '../util/routeUtil';
 import { Switch } from 'react-router-dom';
 import NavBar from './NavBar';

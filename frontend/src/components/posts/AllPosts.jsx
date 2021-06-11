@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import PostBox from './PostBox';
 import { fetchPosts } from '../../actions/postActions';

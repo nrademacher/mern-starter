@@ -1,8 +1,8 @@
-# chirper
+# MERN starter
 
-A simple Twitter-like fullstack app built on the MERN (MondoDB, ExpressJS, ReactJS, NodeJs) stack, as well as Redux as the app's state container.
+A complete MERN (MondoDB, ExpressJS, ReactJS, NodeJs) template for building fullstack apps.
 
-JWT (JSON Web tokens) is used to handle user authentication.
+Includes JWT user authorization as well as basic RESTful CRUD functionality to build upon.
 
 ## Getting started
 

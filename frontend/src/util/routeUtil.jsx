@@ -1,29 +1,39 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, {useEffect} from "react";
+import { useQuery, useApolloClient } from "react-apollo";
+import { gql } from "apollo-boost";
 import { Route, Redirect, withRouter } from "react-router-dom";
 
-const Auth = ({ component: Component, path, exact }) => {
-  const loggedIn = useSelector((state) => state.session.isAuthenticated);
+export const IS_LOGGED_IN = gql`
+  {
+    isLoggedIn @client
+  }
+`;
 
+const Auth = ({ component: Component, path, exact }) => {
+  const {data, loading} = useQuery(IS_LOGGED_IN, {fetchPolicy: "network-only"})
+
+  if (loading) return null
   return (
     <Route
       path={path}
       exact={exact}
       render={(props) =>
-        !loggedIn ? <Component {...props} /> : <Redirect to="/tweets" />
+        !data.isLoggedIn ? <Component {...props} /> : <Redirect to="/tweets" />
       }
     />
   );
 };
 
 const Protected = ({ component: Component, ...rest }) => {
-  const loggedIn = useSelector((state) => state.session.isAuthenticated);
+  const {data, loading, refetch} = useQuery(IS_LOGGED_IN, {fetchPolicy: "network-only"})
+
+  if (loading) return null
 
   return (
     <Route
       {...rest}
       render={(props) =>
-        loggedIn ? <Component {...props} /> : <Redirect to="/login" />
+        data.isLoggedIn ? <Component {...props} /> : <Redirect to="/login" />
       }
     />
   );

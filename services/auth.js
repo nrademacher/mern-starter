@@ -74,7 +74,7 @@ module.exports = {
           { expiresIn: 3600 }
         );
 
-        return { token: 'Bearer ' + jwtToken };
+        return { token: jwtToken };
       } else {
         throw new Error('Incorrect password');
       }
@@ -91,6 +91,7 @@ module.exports = {
       const decoded = jwt.verify(token, process.env.SECRET);
       const { id } = decoded;
 
+      console.log(id)
       // then we try to use the User with the id we just decoded
       // making sure we await the response
       const loggedIn = await User.findById(id).then((user) => {

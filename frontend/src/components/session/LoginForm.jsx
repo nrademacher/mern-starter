@@ -1,12 +1,31 @@
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { login } from '../../actions/sessionActions';
+import { useSelector } from 'react-redux';
+import { useMutation } from 'react-apollo';
+import { gql } from 'apollo-boost';
 
-const LoginForm = (props) => {
+export const LOGIN_USER = gql`
+  mutation LoginUser($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
+      email
+      token
+      loggedIn
+    }
+  }
+`;
+
+
+const LoginForm = () => {
   const [form, setForm] = useState({ email: '', password: '' });
+  const [login] = useMutation(LOGIN_USER, {
+    onCompleted(data) {
+      const {token} = data.login
+      console.log(token)
+      localStorage.setItem("auth-token", token)
+      window.history.href = '/tweets';
+    }
+  });
   const errors = useSelector((state) => state.errors.session);
-  const dispatch = useDispatch();
 
   const updateField = (field) => {
     return (e) =>
@@ -18,13 +37,7 @@ const LoginForm = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    let user = {
-      email: form.email,
-      password: form.password,
-    };
-
-    dispatch(login(user));
+    login({ variables: { email: form.email, password: form.password } });
   };
 
   const renderErrors = () => {
@@ -40,7 +53,7 @@ const LoginForm = (props) => {
   return (
     <section className="place-items-center mt-[10vh]">
       <form onSubmit={handleSubmit}>
-    <div className="w-[95vw] md:w-[30vw] mx-auto">
+        <div className="w-[95vw] md:w-[30vw] mx-auto">
           <div className="form-control">
             <label className="label">
               <span className="label-text">Email</span>
@@ -66,7 +79,11 @@ const LoginForm = (props) => {
             />
           </div>
 
-          <input type="submit" value="Submit" className="mt-4 btn btn-primary" />
+          <input
+            type="submit"
+            value="Submit"
+            className="mt-4 btn btn-primary"
+          />
           {renderErrors()}
         </div>
       </form>

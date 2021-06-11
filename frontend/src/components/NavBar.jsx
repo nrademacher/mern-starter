@@ -1,21 +1,30 @@
 import React, { useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useApolloClient, useQuery } from 'react-apollo';
+import { gql } from 'apollo-boost';
 import { Link } from 'react-router-dom';
-import { logout } from '../actions/sessionActions';
+
+const IS_LOGGED_IN = gql`
+  query IsUserLoggedIn {
+    isLoggedIn @client
+  }
+`;
 
 const NavBar = () => {
+  const client = useApolloClient();
+  const { data } = useQuery(IS_LOGGED_IN);
   const navTab = useRef(null);
   const [initTab, setInitTab] = useState('bordered');
 
-  const loggedIn = useSelector((state) => {
-    return state.session.isAuthenticated;
-  });
-
-  const dispatch = useDispatch();
-
   const logoutUser = (e) => {
     e.preventDefault();
-    dispatch(logout());
+    localStorage.removeItem('auth-token');
+    console.log(client)
+    client.writeData({
+      data: {
+        isLoggedIn: false,
+      },
+    });
+    console.log(client)
     setInitTab('bordered');
   };
 
@@ -27,7 +36,7 @@ const NavBar = () => {
   };
 
   const getLinks = () => {
-    if (loggedIn) {
+    if (data.isLoggedIn) {
       return (
         <ul className="px-3 text-xs md:text-base flex w-full shadow-lg menu horizontal">
           <li

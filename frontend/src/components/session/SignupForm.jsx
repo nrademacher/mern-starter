@@ -1,12 +1,39 @@
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { signUp } from "../../actions/sessionActions";
+import { useMutation } from "react-apollo";
+import {gql} from "apollo-boost";
+// import { signUp } from "../../actions/sessionActions";
+
+const REGISTER_USER = gql`
+mutation RegisterUser($email: String!, $handle: String!, $password: String!, $password2: String!) {
+  register(email: $email, handle: $handle, password: $password, password2: $password2) {
+      email
+      token
+      loggedIn
+    }
+  }
+`;
+
+const updateCache = (client, {data}) => {
+    // here we can write directly to our cache with our returned mutation data
+    client.writeData({
+      data: { isLoggedIn: data.register.loggedIn }
+    });
+  }
 
 const SignupForm = (props) => {
   const signedIn = useSelector((state) => state.session.isSignedIn);
   const errors = useSelector((state) => state.errors.session);
-  const dispatch = useDispatch();
+  const [register] = useMutation(REGISTER_USER, {
+    onCompleted(data) {
+      const {token} = data.register
+      localStorage.setItem("auth-token", token)
+    },
+    update(client, data) {
+updateCache(client, data)
+    }
+  });
   const [form, setForm] = useState({
     email: "",
     handle: "",
@@ -38,7 +65,12 @@ const SignupForm = (props) => {
       password2: form.password2,
     };
 
-    dispatch(signUp(user));
+    register({variables: {
+      email: form.email,
+      handle: form.handle,
+      password: form.password,
+      password2: form.password2,
+    }})
   };
 
   const renderErrors = () => {

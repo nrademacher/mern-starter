@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import session from './sessionReducer';
 import errors from './errorsReducer';
-import tweets from './tweetsReducer';
+import posts from './postsReducer';
 
 const RootReducer = combineReducers({
   errors,
   session,
-  tweets
+  posts
 });
 
 export default RootReducer;

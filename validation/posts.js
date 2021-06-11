@@ -1,13 +1,13 @@
 const Validator = require('validator');
 const validText = require('./validText');
 
-module.exports = function validateTweetInput(data) {
+module.exports = function validatePostInput(data) {
   let errors = {};
 
   data.text = validText(data.text) ? data.text : '';
 
   if (!Validator.isLength(data.text)) {
-    errors.text = 'Tweet must be between 5 and 140 characters';
+    errors.text = 'Post cannot be empty';
   }
 
   if (Validator.isEmpty(data.text)) {

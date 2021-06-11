@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
-const TweetSchema = new Schema({
+const PostSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'users'
@@ -16,4 +16,4 @@ const TweetSchema = new Schema({
   }
 })
 
-module.exports = Tweet = mongoose.model('Tweet', TweetSchema)
+module.exports = Tweet = mongoose.model('Post', PostSchema)

@@ -1,19 +1,19 @@
 import { connect } from 'react-redux';
-import { fetchUserTweets, removeTweet } from '../../actions/tweetActions';
-import UserTweets from './UserTweets';
+import { fetchUserPosts, removePost } from '../../actions/postActions';
+import UserPosts from './UserPosts';
 
 const mapStateToProps = (state) => {
   return {
-    tweets: Object.values(state.tweets.user),
+    posts: Object.values(state.posts.user),
     currentUser: state.session.user
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    fetchUserTweets: id => dispatch(fetchUserTweets(id)),
-    removeTweet: (userId, tweetId) => dispatch(removeTweet(userId, tweetId))
+    fetchUserPosts: id => dispatch(fetchUserPosts(id)),
+    removePost: (userId, postId) => dispatch(removePost(userId, postId))
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserTweets);
+export default connect(mapStateToProps, mapDispatchToProps)(UserPosts);

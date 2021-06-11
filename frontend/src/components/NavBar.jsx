@@ -34,13 +34,13 @@ const NavBar = () => {
             className={`justify-self-start ${initTab}`}
             onClick={(e) => handleNavClick(e)}
           >
-            <Link to={'/tweets'}>All Tweets</Link>
+            <Link to={'/posts'}>All Posts</Link>
           </li>
           <li className="justify-self-start" onClick={(e) => handleNavClick(e)}>
             <Link to={'/profile'}>Profile</Link>
           </li>
           <li className="flex-1" onClick={(e) => handleNavClick(e)}>
-            <Link to={'/new_tweet'}>Write a Tweet</Link>
+            <Link to={'/new_post'}>Write a Post</Link>
           </li>
           <li className="justify-self-end self-center h-full">
             <button onClick={logoutUser}>Logout</button>

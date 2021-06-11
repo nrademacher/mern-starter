@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import TweetBox from './TweetBox';
-import { composeTweet } from '../../actions/tweetActions';
+import PostBox from './PostBox';
+import { composePost } from '../../actions/postActions';
 
-const TweetCompose = (props) => {
+const PostCompose = (props) => {
   const dispatch = useDispatch();
   const [text, setText] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let tweet = {
+    let post = {
       text: text,
     };
 
-    dispatch(composeTweet(tweet));
+    dispatch(composePost(post));
     setText('');
   };
 
@@ -30,7 +30,7 @@ const TweetCompose = (props) => {
             value={text}
             onChange={update}
             className="w-2/3 textarea textarea-bordered textarea-primary"
-            placeholder="Write your tweet..."
+            placeholder="Write your post..."
           />
           <input
             type="submit"
@@ -39,9 +39,9 @@ const TweetCompose = (props) => {
           />
         </div>
       </form>
-      <TweetBox text={text} />
+      <PostBox text={text} />
     </div>
   );
 };
 
-export default TweetCompose;
+export default PostCompose;

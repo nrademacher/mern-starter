@@ -6,7 +6,7 @@ const passport = require('passport');
 require('./config/passport')(passport);
 const cors = require('cors');
 const users = require('./routes/api/users');
-const tweets = require('./routes/api/tweets');
+const posts = require('./routes/api/posts');
 
 const db = process.env.MONGO_URI;
 mongoose
@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(passport.initialize());
 app.use('/api/users', users);
-app.use('/api/tweets', tweets);
+app.use('/api/posts', posts);
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('frontend/dist'));
   app.get('*', (req, res) => {

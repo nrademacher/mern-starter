@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-const TweetBox = ({ text, user, id, deleteTweet, editTweet }) => {
+const PostBox = ({ text, user, id, deletePost, editPost }) => {
   const [editMode, setEditMode] = useState(false);
   const [edit, setEdit] = useState(text);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    editTweet(user, id, edit);
+    editPost(user, id, edit);
     setEditMode(false);
   };
 
@@ -18,7 +18,7 @@ const TweetBox = ({ text, user, id, deleteTweet, editTweet }) => {
         <input className="p-4 bg-primary bg-opacity-25 rounded-md" type="textarea" value={edit} onChange={(e) => setEdit(e.target.value)} />
       )}
       <div className="flex">
-        {editTweet && !editMode && (
+        {editPost && !editMode && (
           <button
             className="mx-auto mt-8 w-1/4 btn btn-primary"
             onClick={() => setEditMode(true)}
@@ -26,15 +26,15 @@ const TweetBox = ({ text, user, id, deleteTweet, editTweet }) => {
             Edit
           </button>
         )}
-        {editTweet && editMode && (
+        {editPost && editMode && (
           <button type="submit" className="mx-auto mt-8 w-1/4 btn btn-primary">
             Save
           </button>
         )}
-        {deleteTweet && (
+        {deletePost && (
           <button
             className="mx-auto mt-8 w-1/4 btn btn-secondary"
-            onClick={deleteTweet}
+            onClick={deletePost}
           >
             Delete
           </button>
@@ -44,4 +44,4 @@ const TweetBox = ({ text, user, id, deleteTweet, editTweet }) => {
   );
 };
 
-export default TweetBox;
+export default PostBox;

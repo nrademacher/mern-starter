@@ -40,7 +40,7 @@ const NavBar = () => {
             <Link to={'/profile'}>Profile</Link>
           </li>
           <li className="flex-1" onClick={(e) => handleNavClick(e)}>
-            <Link to={'/new_post'}>Write a Post</Link>
+            <Link className="flex-1" to={'/new_post'}>Write a Post</Link>
           </li>
           <li className="justify-self-end self-center h-full">
             <button onClick={logoutUser}>Logout</button>
@@ -55,12 +55,12 @@ const NavBar = () => {
           </div>
           <div className="flex-1 px-2 mx-2">
             <div className="items-stretch flex">
-              <a className="btn btn-ghost btn-sm rounded-btn">
+              <li className="btn btn-ghost btn-sm rounded-btn">
                 <Link to={'/signup'}>Signup</Link>
-              </a>
-              <a className="btn btn-ghost btn-sm rounded-btn">
+              </li>
+              <li className="btn btn-ghost btn-sm rounded-btn">
                 <Link to={'/login'}>Login</Link>
-              </a>
+              </li>
             </div>
           </div>
         </div>

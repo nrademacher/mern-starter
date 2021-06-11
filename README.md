@@ -1,6 +1,6 @@
 # MERN starter
 
-A complete MERN (MondoDB, ExpressJS, ReactJS, NodeJs) template for getting started with building a fullstack app.
+A complete MERN (MondoDB, Express, React, Node) template for getting started with building a fullstack app.
 
 Includes JWT user authorization as well as basic RESTful CRUD functionality to build upon.
 
